@@ -9,9 +9,9 @@ services:
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - '3306:3306'
+      - '3307:3306'
     expose:
-      - '3306'
+      - '3307'
     volumes:
       - mysqlDb:/var/lib/mysql
   code-kata-frontend:

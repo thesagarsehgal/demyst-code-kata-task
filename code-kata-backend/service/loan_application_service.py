@@ -111,7 +111,11 @@ def submit_application(submit_loan_application_request_schema : loan_application
     application_in_db.application_status = LoanApplicationStatus.LOAN_DECISION_COMPLETE.value 
     if(decision_service_response["loan_sanction"]==True):
         application_in_db.amount_sanctioned = int(application_in_db.loan_amount_requested * (application_in_db.pre_assessment_value /100))
+    else:
+        application_in_db.amount_sanctioned = 0
+        
     loan_application_dao.save(application_in_db, db)
+    
     
     return loan_application_schema.SubmitLoanApplicationResponseSchema(
         application_uuid=application_in_db.application_uuid,

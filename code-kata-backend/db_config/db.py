@@ -1,5 +1,3 @@
-
-
 # Dependency
 from db_config.database import SessionLocal
 

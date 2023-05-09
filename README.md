@@ -1,4 +1,6 @@
-### How to setup 
+# Code-Kata-Task
+
+# How to setup 
 - install docker-compose on your system 
 - run the following command build the docker images 
 ```
@@ -77,10 +79,12 @@ class AccountingProvider(BaseModel):
 # Assumptions 
 - For Accounting Providers ... have hardcoded the API's with the response (as mentioned in the task) with a Mock API https://apimocha.com/demyst/xero/accounting-service, https://apimocha.com/demyst/myob/accounting-service 
 - For Decision Service ... have hardcoded its response (as mentioned in the task) with a Mock API https://apimocha.com/demyst/decision-service 
+- No User authentication has been added in the current system.
 - For making decision of `pre_assessment_value` ... have assumed the following 
     - matching if last 12 month data is present ... if not present ... the application would be rejected bcz of Absence of Data
     - calculating total_profit_loss, as a sum of all the all profit/loss of past 12 months 
-    - ```if(total_profit_loss_last_12_months > 0):
+    ```
+    if(total_profit_loss_last_12_months > 0):
         if(average_asset_last_12_months > loan_amount_requested):
             pre_assessment_value = 100
         else:
@@ -89,3 +93,31 @@ class AccountingProvider(BaseModel):
         pre_assessment_value = 20
     ```
     
+# Looking on FE and BE APIs
+- You can access FE on http://localhost:3000/
+- You can access BE on http://localhost:8000/docs
+- You can connect to the DB on localhost:3307 with 
+    - username "user"
+    - password "password" 
+
+# Same Test Cases 
+- The XERO accounting service has been hardcoded (https://apimocha.com/demyst/xero/accounting-service) to return data such that 
+    - total profit of last 12 months = 200
+    - total assets of last 12 months = 1200 
+    - avg assets of last 12 months = 100
+
+```
+Since overall profit > 100
+So, taking a loan of 101(i.e. >avg asset value) ... would result in 60% sanction of loan ... i.e. of Rs. 60
+And, taking a loan of 99(i.e. <avg asset value) ... would result in 100% sanction of loan ... i.e. of Rs. 99
+```
+
+- The MYOB accounting service has been hardcoded (https://apimocha.com/demyst/myob/accounting-service) to return data such that 
+    - total profit of last 12 months = -200
+    - total assets of last 12 months = 1200 
+    - avg assets of last 12 months = 100
+
+```
+Since overall profit < 0
+So, taking a loan of any value would lead to sanction of 20% of loan amount. For eg: Rs. 100 would sanction an amount of Rs. 20.
+```

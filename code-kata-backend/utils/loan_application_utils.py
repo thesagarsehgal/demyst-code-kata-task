@@ -34,7 +34,6 @@ def get_preassessment_score(accounting_balance_sheet_json, loan_amount_requested
             raise Exception("Balance Sheet does not contains latest data.")
     
     avg_asset = total_asset_value/PreDecisionSummaryConfigConstant.EVALUATION_MONTHS    
-    
     if(total_profit>0):
         if(avg_asset>loan_amount_requested):
             return 100, total_profit
