@@ -80,8 +80,7 @@ class AccountingProvider(BaseModel):
 - For making decision of `pre_assessment_value` ... have assumed the following 
     - matching if last 12 month data is present ... if not present ... the application would be rejected bcz of Absence of Data
     - calculating total_profit_loss, as a sum of all the all profit/loss of past 12 months 
-    - ```
-    if(total_profit_loss_last_12_months > 0):
+    - ```if(total_profit_loss_last_12_months > 0):
         if(average_asset_last_12_months > loan_amount_requested):
             pre_assessment_value = 100
         else:
