@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  mysqlDb: 
+    image: mysql:8.0.33 
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'demystDb'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - mysqlDb:/var/lib/mysql
+  code-kata-frontend:
+    build: ./code-kata-frontend
+    ports:
+      - "3000:3000"
+    expose:
+      - '3000'
+    links:
+      - code-kata-backend
+  code-kata-backend:
+    build: ./code-kata-backend
+    restart: always
+    ports:
+      - "8000:80"
+    expose:
+      - '8000'
+    depends_on:
+      - mysqlDb
+    # links:
+    #   - mysqlDb
+volumes:
+  mysqlDb:
